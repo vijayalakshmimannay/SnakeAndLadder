@@ -9,13 +9,14 @@ namespace SnakeandLadder
 {
     internal class SnakeAndLadder
     {
-        int diceNo, playerPosition = 0;
+        int diceNo, inc = 0, playerPosition = 0;
         const int noPlay = 0, snake = 1, ladder = 2;
         Random random = new Random();
 
-        public int diceRoll()
+        public int DiceRoll()
         {
             diceNo = random.Next(1, 6);
+            inc++;
             return diceNo;
         }
         public void diceRollGame()
@@ -26,12 +27,13 @@ namespace SnakeandLadder
                 {
                     case noPlay:
                         playerPosition += 0;
+                        Console.WriteLine("Player got noPlay Option");
                         break;
                     case snake:
-                        playerPosition -= diceRoll();
+                        playerPosition -= DiceRoll();
                         break;
                     case ladder:
-                        playerPosition += diceRoll();
+                        playerPosition += DiceRoll();
                         break;
                     default:
                         break;
@@ -39,27 +41,29 @@ namespace SnakeandLadder
                 if (playerPosition < 0)
                 {
                     playerPosition = 0;
-                    Console.WriteLine("Player Present Position is at " + playerPosition);
                 }
                 if (playerPosition > 100)
                 {
+                    Console.WriteLine("Player rolls the dice {0} time to reach Position {1}\n", inc, playerPosition);
                     playerPosition -= diceNo;
                     while (playerPosition < 100)
                     {
-                        if (diceRoll() == (100 - playerPosition))
+                        if (DiceRoll() == (100 - playerPosition))
                         {
                             playerPosition = 100;
                             Console.WriteLine("Player Won the Game");
                         }
                         else
                         {
+                            Console.WriteLine("Player rolls the dice {0} time to reach Position {1}\n", inc, playerPosition);
                             continue;
                         }
                     }
                 }
-                Console.WriteLine("Player Present Position is at {0}\n", playerPosition);
+                Console.WriteLine("Player rolls the dice {0} time to reach Position {1}\n", inc, playerPosition);
             }
         }
     }
 }
+
 
